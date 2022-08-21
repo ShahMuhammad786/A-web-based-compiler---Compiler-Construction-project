@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compiler Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container-flex">
+
+        <nav class="navbar navbar-light bg-primary">
+            <div class="container-fluid">
+                <img src="./download.png" style="padding: 0; margin: 0; width: 150px;" alt="" >
+                <h3 class="text-light" style="font-family: Copperplate Gothic Light;">Compiler Construction Parser</h3>
+                <img src="./cs.png" alt="cs logo" style=" width: 150px;"  >
+            </div>
+            <div id="err" style="position:absolute; left: 500px; top: 25px; visibility: hidden;" class="mb-5 alert alert-danger alert-dismissible fade show " role="alert">
+                <strong>Ohh Shit!</strong> Wrong input for format !!!<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="cls"></button>
+            </div> 
+        </nav>
+        
+
+        <div class="row">
+            
+            <div class="col-md-6 mt-4" style="margin-left: 20px;">
+                <div class="input-group">
+                    <input type="file" accept=".txt" id="fileBtn" class="form-control"  aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                </div>      
+                <br>              
+                <div class="form-floating pb-3">
+                    <textarea class="form-control bg-light" rows="17" id='expression' style="height:100%;" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Input Expressions...</label>
+                </div>
+                <button class="btn btn-warning" id='tokenizeBtn'>Tokenize</button>
+                <button class="btn btn-dark" id='parseBtn'>Parse</button>
+                <button class="btn btn-success" id='compileBtn'>Compile</button>
+            </div>
+
+            <div class="col-5 mt-4 bg-light" id='stepsPortion'>
+                
+                <form>
+                    <label><strong>Tokens of the Given Input</strong></label>
+                    <textarea name="" class=" form-control mb-2" rows="4" id='tokenArea'></textarea>
+                    <label><strong>Parsed Tree of the given Input</strong></label>
+                    <textarea name="" class=" form-control mb-2" rows="4" id='parseTree'></textarea>
+                    <label><strong>Result of the given Expressions</strong></label>
+                    <textarea name="" class=" form-control mb-2" rows="4" id='result'></textarea>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary" type="button" id='hideBtn'>Hide Output</button>
+                        <button class="btn btn-danger" type="button" id='clearAllBtn' >Clear All Outputs</button>
+                    </div>
+                    
+                </form>
+            </div>
+
+            
+            
+            <div class="col-4 mt-4">   
+                            
+                <form>
+                    <label><strong class="text-danger">How the System works?</strong></label>
+                    <br><br>
+                    <label style="width: 100%;" class="btn btn-primary" id="1" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <b>+</b> See the working flow of the System
+                    </label>                   
+                    <div class="collapse" id="1exp">
+                        <div class="card card-body bg-light">
+                            <ul>
+                                <li>Takes input expression</li>
+                                <li>Converts it into lexems</li>
+                                <li>Lexemes are parsed to create Abstract Syntax Tree</li>
+                                <li>AST is compiled to Javascript</li>                                
+                            <ul>
+                        </div>
+                    </div>
+                    <br>
+                    <label style="width: 100%;" class="btn btn-primary" id="2" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <b>+</b> See the Operators for which the System works
+                    </label>                   
+                    <div class="collapse" id="2exp">
+                        <div class="card card-body bg-light">
+                            <ul>
+                                <li>Add</li>
+                                <li>Subtract</li>
+                                <li>Multiply</li>
+                                <li>Divide</li>
+                                <li>Mod</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    <label style="width: 100%;" class="btn btn-primary" id="3" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <b>+</b> See the Examples of Valid input for the System
+                    </label>                   
+                    <div class="collapse" id="3exp">
+                        <div class="card card-body bg-light">
+                            <p>The statements should be in prefix form of two operands</p>
+                            <ul>
+                                <li>Multiply 5</li>
+                                <li>Multiply 5 5 </li>
+                                <li>Multiply 5 5 Divide 4 2</li>
+                                <li>Add 5 5 Subtract 4 Divide 7 7 Mod 9 3</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    <label style="width: 100%;" class="btn btn-primary" id="4" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <b>+</b> See the Examples of Invalid input for the System
+                    </label>                   
+                    <div class="collapse" id="4exp">
+                        <div class="card card-body bg-light">
+                            <ul>
+                                <li>Sum 5 4 7</li>
+                                <li>Multiply</li>
+                                <li>Multiply 5 5 Div 4 7 Sub 5 5 Add</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    <label style="width: 100%;" class="btn btn-primary" id="5" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <b>>></b> See the CFG of the Compiler
+                    </label>                   
+                    <div class="collapse" id="5exp">                        
+                    </div>
+                    <br>
+                    <label style="width: 100%;" class="btn btn-primary" id="6" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <b>>></b> See the Lexical Analyzer of the Compiler
+                    </label>                   
+                    <div class="collapse" id="6exp">
+                       
+                    </div>
+                    <br>
+                    <label style="width: 100%;" class="btn btn-primary" id="7" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <b>>></b> See the Syntax Analyzer of the Compiler
+                    </label>                   
+                    <div class="collapse" id="7exp">
+                       
+                    </div>
+                    <br>
+                    <label style="width: 100%;" class="btn btn-primary" id="8" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <b>>></b> See the Compiler
+                    </label>                   
+                    <div class="collapse" id="8exp">
+                       
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mTitle"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" >
+                        <div class="card" id="card1">
+                            <img src="" alt="" id="img1"> 
+                        </div>
+                        <br>
+                        <div class="card" id="card2">
+                            <img src="" alt="" id="img2">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
+
+<script>
+
+    let tokenizeBtn = document.getElementById('tokenizeBtn')
+    let parseBtn = document.getElementById('parseBtn')
+    let compileBtn = document.getElementById('compileBtn')
+    let input = document.getElementById('expression')
+    let tokenArea = $('#tokenArea')
+    let parseTree = $('#parseTree')
+    let resultArea = $('#result')
+
+    $('#1').click(function(){
+        $('#1exp').toggle(300)
+    })
+    $('#2').click(function(){
+        $('#2exp').toggle(300)
+    })
+    $('#3').click(function(){
+        $('#3exp').toggle(300)
+    })
+    $('#4').click(function(){
+        $('#4exp').toggle(300)
+    })
+    $('#5').click(function(){
+        $('#modal').modal('show')
+        $('#mTitle').text('CFG of the Arthematic Compiler')
+        $('#img1').attr('src','./cfg.png')
+        $('#card2').css({visibility: 'hidden'})
+    })
+    $('#6').click(function(){
+        $('#modal').modal('show')
+        $('#mTitle').text('Lexical Analyzer the Arthematic Compiler')
+        $('#img1').attr('src','./lexicalAnalyzer1.png')
+        $('#card2').css({visibility: 'visible'})
+        $('#img2').attr('src', './lexicalAnalyzer2.png')
+    })
+    $('#7').click(function(){
+        $('#modal').modal('show')
+        $('#mTitle').text('Syntax Analyzer the Arthematic Compiler')
+        $('#img1').attr('src','./syntaxAnalyzer1.png')
+        $('#card2').css({visibility: 'visible'})
+        $('#img2').attr('src', './syntaxAnalyzer2.png')
+    })
+    $('#8').click(function(){
+        $('#modal').modal('show')
+        $('#mTitle').text('The Compiler')
+        $('#img1').attr('src','./compiler1.png')
+        $('#card2').css({visibility: 'visible'})
+        $('#img2').attr('src', './compiler2.png')
+    })
+
+
+    $('#cls').click(function(){
+        location.reload();
+    })
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        $('#stepsPortion').hide()
+    })
+
+    $('#hideBtn').click(function(){
+        $('#stepsPortion').hide(500)
+    })
+
+    document.getElementById('clearAllBtn').addEventListener('click',(ev) => {
+
+        ev.preventDefault()
+
+        $(input).text('')
+        $(tokenArea).text('')
+        $(parseTree).text('')
+        $(resultArea).text('')
+
+    })
+
+    tokenizeBtn.addEventListener('click', (ev) => {
+        ev.preventDefault()
+        let output=lexicaAnalyzer(input.value)
+        let str=''
+
+        output.forEach((element, index) => {
+            str+='<'+index+","+element+">\n"
+        });
+        $(tokenArea).text(str)
+
+        $('#stepsPortion').show(1000)
+    })
+
+    parseBtn.addEventListener('click', (ev) => {
+        ev.preventDefault()
+
+        $(parseTree).text(compile(parse(lexicaAnalyzer(input.value))))
+        $('#stepsPortion').show(1000)
+    })
+
+    compileBtn.addEventListener('click', (ev) => {
+        ev.preventDefault()
+
+        $(resultArea).text(evaluate(parse(lexicaAnalyzer(input.value))))
+        $('#stepsPortion').show(1000)
+    })
+
+    $(document).ready(function () {
+        $('#fileBtn').change(function (e) {
+            var file = e.target.files[0]
+
+
+            var reader = new FileReader();
+            reader.readAsText(file, 'UTF-8');
+
+            // here we tell the reader what to do when it's done reading...
+            reader.onload = readerEvent => {
+                var content = readerEvent.target.result; // this is the content!
+                $(input).text(content)
+            }
+            
+        });
+    });
+
+
+    const lexicaAnalyzer = str => str.split(' ').map(s => s.trim());
+
+    const Op = Symbol('op');
+    const Num = Symbol('num');
+    
+    const parse = tokens => {
+        let tokenCount = 0;
+        const peek = () => tokens[tokenCount];
+        const consume = () => tokens[tokenCount++];
+        const parseNum = () => ({ val: parseInt(consume()), type: Num });
+        const parseOp = () => {
+            const node = { val: consume(), type: Op, expr: [] };
+            while (peek()) node.expr.push(parseExpr());
+            return node;
+        };
+        const parseExpr = () =>{
+            if(/\d/.test(peek())){
+                return parseNum()
+            }
+            else if(isOperator(peek())){
+                return parseOp()
+            }
+            else{   
+                $('#err').css({visibility:"visible"})
+            }   
+        } 
+        const isOperator=(p)=>{
+            if(p=='Add' || p=='Subtract' || p=='Multiply' || p=='Divide' || p=='Mod'){
+                return true
+            }
+            return false
+        }
+        return parseExpr();
+    };
+
+
+    let error='ERROR: No Operand given after'
+
+    const evaluate = ast => {
+        const opAcMap = {
+            Add: args => args.length==0?error+" Add" : args.reduce((a, b) => a + b, 0),
+            Subtract: args => args.length==0?error+" Subtract":args.reduce((a, b) => a - b),
+            Divide: args => args.length==0?error+" Divide":args.reduce((a, b) => a / b),
+            Multiply: args => args.length==0?error+" Multiply":args.reduce((a, b) => a * b, 1),
+            Mod: args => args.length==0?error+" Mod":args.reduce((a, b) => a % b),
+
+        };
+
+        if (ast.type === Num) return ast.val;
+        return opAcMap[ast.val](ast.expr.map(evaluate));
+    };
+
+    const compile = ast => {
+        const opMap = { Add: '+', Multiply: '*', Subtract: '-', Divide: '/', Mod: '%' };
+        const compileNum = ast => ast.val;
+        const compileOp = ast => `(${ast.expr.map(compile).join('\n' + opMap[ast.val] + '\n')}\n)`;
+        const compile = ast => ast.type === Num ? compileNum(ast) : compileOp(ast);
+        return compile(ast);
+    };
+
+</script>

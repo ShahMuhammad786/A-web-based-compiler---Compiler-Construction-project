@@ -1,0 +1,6 @@
+Divide 27 9 Add 5 4 Mod 9 3 Subtract 27 26 Multiply 7 1
+Subtract 27 4 1 Add 3 4 Divide 7 7 Add 65 1
+Divide 27 9 Add 5 4 Mod 9 3 Subtract 27 26 Multiply 7 1
+Subtract 27 4 1 Add 3 4 Divide 7 7 Add 65 1
+Divide 27 9 Add 5 4 Mod 9 3 Subtract 27 26 Multiply 7 1
+Subtract 27 4 1 Add 3 4 Divide 7 7 Add 65 1
